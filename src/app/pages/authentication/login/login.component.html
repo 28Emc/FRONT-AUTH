@@ -1,0 +1,44 @@
+<div class="container">
+  <p class="title">{{ title | uppercase }}</p>
+  <p class="text">Proyecto hecho con Angular v17 que gestiona el inicio de sesión de forma local (usuario y contraseña)
+    y mediante redes sociales (Google, Facebook, Github, Twitter).</p>
+
+  <form [formGroup]="form" autocomplete="off">
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Usuario</mat-label>
+      <input formControlName="username" autocomplete="off" matInput />
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label>Contraseña</mat-label>
+      <input formControlName="password" autocomplete="off" matInput type="password" />
+    </mat-form-field>
+
+    <button mat-button class="btn-local" (click)="signInLocal()">
+      Iniciar Sesión
+    </button>
+  </form>
+  <!-- <span class="d-block f-w-500 text-center m-t-24"
+          >New to Modernize?
+          <a
+            [routerLink]="['/authentication/register']"
+            class="text-decoration-none text-primary f-w-500 f-s-14"
+          >
+            Create an account</a
+          >
+        </span> -->
+
+  <br />
+
+  <button mat-button class="btn-google" (click)="signInWithGoogle()">
+    Iniciar Sesión con Google
+  </button>
+  <button mat-button class="btn-fb" (click)="signInWithFacebook()">
+    Iniciar Sesión con Facebook
+  </button>
+  <button mat-button class="btn-git" (click)="signInWithGithub()">
+    Iniciar Sesión con Github
+  </button>
+  <button mat-button class="btn-x" (click)="signInWithTwitter()">
+    Iniciar Sesión con Twitter
+  </button>
+</div>

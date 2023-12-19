@@ -1,0 +1,38 @@
+<div class="container">
+  @defer (when !loading) {
+  @if (profileData) {
+  <mat-card class="user-card">
+    <mat-card-header>
+      <mat-card-title>{{ profileData['username'] }}</mat-card-title>
+      @if (profileData['picture']) {
+      }
+    </mat-card-header>
+    <mat-card-content>
+      <img [src]="profileData['picture']" alt="user-picture">
+      <p>FIRST NAME: <span>{{ profileData['firstName'] ?? '-' }}</span></p>
+      <p>LAST NAME: <span>{{ profileData['lastName'] ?? '-' }}</span></p>
+      <p>STATUS: <span>{{ profileData['statusDsc'] }}</span></p>
+      <p>FLG LOGIN: <span>{{ profileData['flgLoginDsc'] }}</span></p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button [disabled]="readOnly" matTooltip="Edit profile info" mat-icon-button class="btn-edit-profile"
+        (click)="readOnly ? null : editProfileInfo()">
+        <mat-icon>{{ readOnly ? 'edit_off' : 'edit' }}</mat-icon>
+      </button>
+      <button matTooltip="Sign Out" mat-icon-button class="btn-logout" (click)="signOut()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  }
+  } @placeholder {
+  <p class="loading-text">Retrieving profile data...</p>
+  }
+
+  @if (hasError) {
+  <p class="error-text">There was an error while retrieving profile data, come back later.</p>
+  <button mat-button class="btn-logout-inverse" (click)="signOut()">
+    Sign Out
+  </button>
+  }
+</div>
