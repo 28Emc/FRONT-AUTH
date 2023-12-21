@@ -55,6 +55,10 @@ export class LoginComponent {
     });
   }
 
+  signUpLocal() {
+    // TODO: ADD REGISTRATION LOGIC
+  }
+
   signInWithGoogle() {
     window.location.replace(`${this.providerBaseURL}/google`);
   }
