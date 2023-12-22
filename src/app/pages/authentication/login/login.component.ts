@@ -8,9 +8,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ErrorHandler } from '../../../utils/errorHandler';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faGoogle } from "@fortawesome/free-brands-svg-icons/faGoogle";
+import { faFacebook } from "@fortawesome/free-brands-svg-icons/faFacebook";
+import { faGithub } from "@fortawesome/free-brands-svg-icons/faGithub";
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons/faXTwitter";
 
 @Component({
   selector: 'app-login',
@@ -23,8 +27,8 @@ import { ErrorHandler } from '../../../utils/errorHandler';
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    FontAwesomeModule
   ],
   providers: [ErrorHandler],
   templateUrl: './login.component.html',
@@ -35,6 +39,10 @@ export class LoginComponent {
   title: string = environment.titleFull;
   form: FormGroup;
   loading: boolean = false;
+  faGoogle = faGoogle;
+  faFacebook = faFacebook;
+  faGithub = faGithub;
+  faTwitter = faXTwitter;
 
   constructor(
     private securityService: SecurityService,

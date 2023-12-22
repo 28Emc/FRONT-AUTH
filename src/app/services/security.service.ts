@@ -62,6 +62,37 @@ export class SecurityService {
       );
   }
 
+  updateProfileInfo(profileBody: any): Observable<any> {
+    return this.http.put(`${this.baseURL}/auth/profile`, profileBody)
+      .pipe(
+        map((profileBodyPayload: any) => {
+          return {
+            message: 'Profile data updated successfully.',
+            details: profileBodyPayload
+          }
+        })
+      );
+  }
+
+  updateProfilePicture(profilePictureBody: any): Observable<any> {
+    return of({
+      message: 'Fake profile picture updated successfully.',
+      details: {
+        imgURL: 'https://picsum.photos/200'
+      }
+    });
+
+    /* return this.http.put(`${this.baseURL}/auth/profile/picture`, profilePictureBody)
+      .pipe(
+        map((profilePicturePayload: any) => {
+          return {
+            message: 'Profile picture updated successfully.',
+            details: profilePicturePayload
+          }
+        })
+      ); */
+  }
+
   refreshToken(): Observable<any> {
     return this.http.post(`${this.baseURL}/auth/jwt/refresh`, null)
       .pipe(
