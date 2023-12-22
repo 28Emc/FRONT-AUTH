@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SecurityService } from '../../services/security.service';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ErrorHandler } from '../../utils/errorHandler';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faPenToSquare, faSignOut } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,7 @@ import { ErrorHandler } from '../../utils/errorHandler';
     MatButtonModule,
     MatCardModule,
     MatDividerModule,
-    MatIconModule,
+    FontAwesomeModule,
     MatTooltipModule
   ],
   providers: [ErrorHandler],
@@ -30,6 +31,8 @@ export class HomeComponent implements OnInit {
   loading: boolean = true;
   hasError: boolean = false;
   readOnly: boolean = false;
+  faPenToSquare = faPenToSquare;
+  faSignOut = faSignOut;
 
   constructor(
     private router: Router,

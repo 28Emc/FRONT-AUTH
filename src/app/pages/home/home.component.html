@@ -17,10 +17,10 @@
     <mat-card-actions>
       <button [disabled]="readOnly" matTooltip="Edit profile info" mat-icon-button class="btn-edit-profile"
         (click)="readOnly ? null : editProfileInfo()">
-        <mat-icon>{{ readOnly ? 'edit_off' : 'edit' }}</mat-icon>
+        <fa-icon [icon]="faPenToSquare"></fa-icon>
       </button>
       <button matTooltip="Sign Out" mat-icon-button class="btn-logout" (click)="signOut()">
-        <mat-icon>logout</mat-icon>
+        <fa-icon [icon]="faSignOut"></fa-icon>
       </button>
     </mat-card-actions>
   </mat-card>
