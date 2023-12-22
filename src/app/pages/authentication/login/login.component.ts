@@ -79,10 +79,6 @@ export class LoginComponent {
     });
   }
 
-  signUpLocal() {
-    // TODO: ADD REGISTRATION LOGIC
-  }
-
   signInWithGoogle() {
     this.loading = true;
     this.form.disable();
