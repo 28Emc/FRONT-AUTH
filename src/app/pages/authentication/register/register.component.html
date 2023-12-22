@@ -1,1 +1,30 @@
-<p>register works!</p>
+<div class="container d-flex-col">
+  <div class="register-card d-flex-col">
+    <p class="title">{{ title | uppercase }}</p>
+    <p class="title-register">Already registered?
+      <a (click)="signInLocal()" class="a-register">
+        Sign in with your credentials</a>
+    </p>
+    <form class="d-flex-col" [formGroup]="form" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+      <mat-form-field color="primary">
+        <mat-label>Username</mat-label>
+        <input cdkFocusInitial formControlName="username" autocomplete="new-username" matInput />
+      </mat-form-field>
+      <mat-form-field color="primary">
+        <mat-label>Password</mat-label>
+        <input formControlName="password" autocomplete="new-password" matInput type="password" />
+      </mat-form-field>
+      <mat-form-field color="primary">
+        <mat-label>Confirm Password</mat-label>
+        <input formControlName="confirmPassword" autocomplete="new-confirm-password" matInput type="password"
+          [errorStateMatcher]="matcher" />
+        <mat-error *ngIf="form.hasError('notSame')">
+          Passwords do not match
+        </mat-error>
+      </mat-form-field>
+      <button type="button" class="btn-local" (click)="signUpLocal()" [disabled]="loading || form.invalid">
+        Sign Up
+      </button>
+    </form>
+  </div>
+</div>

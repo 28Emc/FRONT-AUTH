@@ -29,6 +29,18 @@ export class SecurityService {
           return {
             message: 'Logged in successfully.',
             details: signInPayload
+          };
+        })
+      );
+  }
+
+  signUpLocal(signUpBody: any): Observable<any> {
+    return this.http.post(`${this.baseURL}/auth/sign-up`, signUpBody)
+      .pipe(
+        map((signUpPayload: any) => {
+          return {
+            message: 'Registered successfully.',
+            details: signUpPayload
           }
         })
       );

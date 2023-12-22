@@ -1,4 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.snackbar-success {
+  --mdc-snackbar-container-color: rgba(17, 168, 50, 0.8) !important;
+  color: white;
+}
+
+.snackbar-info {
+  --mdc-snackbar-container-color: rgba(10, 160, 247, 0.8) !important;
+  color: white;
+}
+
+.snackbar-warning {
+  --mdc-snackbar-container-color: rgb(253, 175, 28) !important;
+  color: white;
+}
+
+.snackbar-error {
+  --mdc-snackbar-container-color: rgba(255, 0, 0, 0.8) !important;
+  color: white;
+}

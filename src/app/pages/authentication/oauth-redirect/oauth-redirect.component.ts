@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { SecurityService } from '../../../services/security.service';
+import { ErrorHandler } from '../../../utils/errorHandler';
 
 @Component({
   selector: 'app-oauth-redirect',
   standalone: true,
   imports: [],
+  providers: [ErrorHandler],
   templateUrl: './oauth-redirect.component.html',
   styleUrls: ['./oauth-redirect.component.scss'],
 })
@@ -14,7 +16,8 @@ export class OauthRedirectComponent {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private securityService: SecurityService
+    private securityService: SecurityService,
+    private errorHandler: ErrorHandler
   ) {
     this.activatedRoute.queryParams
       .subscribe((p: Params) => {
@@ -37,6 +40,7 @@ export class OauthRedirectComponent {
           this.router.navigate(['/home'], { replaceUrl: true });
         } catch (error) {
           console.error('Token error', error);
+          this.errorHandler.handleHTTPErrors(error);
           this.router.navigate(['/authentication/login'], { replaceUrl: true });
         }
       });

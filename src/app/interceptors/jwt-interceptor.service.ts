@@ -54,7 +54,7 @@ export const JwtInterceptorService: HttpInterceptorFn = (
             }));
         }
       }
-      return throwError(() => new Error(interceptorError.message));
+      return throwError(() => interceptorError);
     })
   );
 }

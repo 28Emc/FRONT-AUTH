@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ErrorHandler } from '../../utils/errorHandler';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatIconModule,
     MatTooltipModule
   ],
+  providers: [ErrorHandler],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -31,7 +33,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private securityService: SecurityService
+    private securityService: SecurityService,
+    private errorHandler: ErrorHandler
   ) { }
 
   ngOnInit(): void {
@@ -49,6 +52,7 @@ export class HomeComponent implements OnInit {
         },
         error: (err: HttpErrorResponse) => {
           console.error({ err });
+          this.errorHandler.handleHTTPErrors(err);
           this.loading = false;
           this.hasError = true;
           this.readOnly = false;
