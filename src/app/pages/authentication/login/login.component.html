@@ -22,19 +22,19 @@
     <div class="btn-social-group d-flex-row">
       <button type="button" matTooltip="Sign in with Google" class="d-flex-row btn-social btn-google"
         (click)="signInWithGoogle()" [disabled]="loading">
-        <i class="fa-brands fa-google"></i>
+        <fa-icon [icon]="faGoogle"></fa-icon>
       </button>
       <button type="button" matTooltip="Sign in with Facebook" class="d-flex-row btn-social btn-fb"
         (click)="signInWithFacebook()" [disabled]="loading">
-        <i class="fa-brands fa-facebook"></i>
+        <fa-icon [icon]="faFacebook"></fa-icon>
       </button>
       <button type="button" matTooltip="Sign in with Github" class="d-flex-row btn-social btn-git"
         (click)="signInWithGithub()" [disabled]="loading">
-        <i class="fa-brands fa-github"></i>
+        <fa-icon [icon]="faGithub"></fa-icon>
       </button>
       <button type="button" matTooltip="Sign in with Twitter" class="d-flex-row btn-social btn-x"
         (click)="signInWithTwitter()" [disabled]="loading">
-        <i class="fa-brands fa-x-twitter"></i>
+        <fa-icon [icon]="faTwitter"></fa-icon>
       </button>
     </div>
   </div>
