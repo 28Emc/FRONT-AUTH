@@ -29,6 +29,18 @@ export class SecurityService {
           return {
             message: 'Logged in successfully.',
             details: signInPayload
+          };
+        })
+      );
+  }
+
+  signUpLocal(signUpBody: any): Observable<any> {
+    return this.http.post(`${this.baseURL}/auth/sign-up`, signUpBody)
+      .pipe(
+        map((signUpPayload: any) => {
+          return {
+            message: 'Registered successfully.',
+            details: signUpPayload
           }
         })
       );
@@ -36,16 +48,6 @@ export class SecurityService {
 
   fetchSystemOptions(systemOptionsBody: any): Observable<any> {
     return of(null);
-    /* let headers = this.header;
-    // return this.http.get(`http://20.226.41.78/Inversionista/Api/Perfil_Opcion/4/${body.UsuarioId}/${SYSTEM_ID}/-/${body.PerfilId}/`, { headers })
-    return this.http.get(`${this.urlBase}/Perfil_Opcion/4/${body.UsuarioId}/${SYSTEM_ID}/-/${body.PerfilId}/`, { headers })
-      .pipe(map((opciones: any[]) => {
-        return {
-          message: 'Opciones de sistema obtenidas correctamente.',
-          details: opciones
-        }
-      }
-      )); */
   }
 
   fetchProfileInfo(): Observable<any> {

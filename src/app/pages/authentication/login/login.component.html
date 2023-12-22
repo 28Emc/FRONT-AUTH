@@ -1,44 +1,41 @@
-<div class="container">
-  <p class="title">{{ title | uppercase }}</p>
-  <p class="text">Proyecto hecho con Angular v17 que gestiona el inicio de sesión de forma local (usuario y contraseña)
-    y mediante redes sociales (Google, Facebook, Github, Twitter).</p>
-
-  <form [formGroup]="form" autocomplete="off">
-    <mat-form-field appearance="outline" color="primary">
-      <mat-label>Usuario</mat-label>
-      <input formControlName="username" autocomplete="off" matInput />
-    </mat-form-field>
-    <mat-form-field appearance="outline" color="primary">
-      <mat-label>Contraseña</mat-label>
-      <input formControlName="password" autocomplete="off" matInput type="password" />
-    </mat-form-field>
-
-    <button mat-button class="btn-local" (click)="signInLocal()">
-      Iniciar Sesión
-    </button>
-  </form>
-  <!-- <span class="d-block f-w-500 text-center m-t-24"
-          >New to Modernize?
-          <a
-            [routerLink]="['/authentication/register']"
-            class="text-decoration-none text-primary f-w-500 f-s-14"
-          >
-            Create an account</a
-          >
-        </span> -->
-
-  <br />
-
-  <button mat-button class="btn-google" (click)="signInWithGoogle()">
-    Iniciar Sesión con Google
-  </button>
-  <button mat-button class="btn-fb" (click)="signInWithFacebook()">
-    Iniciar Sesión con Facebook
-  </button>
-  <button mat-button class="btn-git" (click)="signInWithGithub()">
-    Iniciar Sesión con Github
-  </button>
-  <button mat-button class="btn-x" (click)="signInWithTwitter()">
-    Iniciar Sesión con Twitter
-  </button>
+<div class="container d-flex-col">
+  <div class="login-card d-flex-col">
+    <p class="title">{{ title | uppercase }}</p>
+    <p class="title-register">Not registered yet?
+      <a (click)="signUpLocal()" class="a-register">
+        Create an account!</a>
+    </p>
+    <form class="d-flex-col" [formGroup]="form" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+      <mat-form-field color="primary">
+        <mat-label>Username</mat-label>
+        <input cdkFocusInitial formControlName="username" autocomplete="new-username" matInput />
+      </mat-form-field>
+      <mat-form-field color="primary">
+        <mat-label>Password</mat-label>
+        <input formControlName="password" autocomplete="new-password" matInput type="password" />
+      </mat-form-field>
+      <button type="button" class="btn-local" (click)="signInLocal()" [disabled]="loading || form.invalid">
+        Sign In
+      </button>
+    </form>
+    <p class="p-text-helper-1">or sign in with:</p>
+    <div class="btn-social-group d-flex-row">
+      <button type="button" matTooltip="Sign in with Google" class="d-flex-row btn-social btn-google"
+        (click)="signInWithGoogle()" [disabled]="loading">
+        <i class="fa-brands fa-google"></i>
+      </button>
+      <button type="button" matTooltip="Sign in with Facebook" class="d-flex-row btn-social btn-fb"
+        (click)="signInWithFacebook()" [disabled]="loading">
+        <i class="fa-brands fa-facebook"></i>
+      </button>
+      <button type="button" matTooltip="Sign in with Github" class="d-flex-row btn-social btn-git"
+        (click)="signInWithGithub()" [disabled]="loading">
+        <i class="fa-brands fa-github"></i>
+      </button>
+      <button type="button" matTooltip="Sign in with Twitter" class="d-flex-row btn-social btn-x"
+        (click)="signInWithTwitter()" [disabled]="loading">
+        <i class="fa-brands fa-x-twitter"></i>
+      </button>
+    </div>
+  </div>
 </div>
