@@ -1,30 +1,48 @@
-<div class="container d-flex-col">
-  <div class="register-card d-flex-col">
-    <p class="title">{{ title | uppercase }}</p>
-    <p class="title-register">Already registered?
-      <a (click)="signInLocal()" class="a-register">
-        Sign in with your credentials</a>
-    </p>
-    <form class="d-flex-col" [formGroup]="form" autocomplete="off" (keydown.enter)="$event.preventDefault()">
-      <mat-form-field color="primary">
-        <mat-label>Username</mat-label>
-        <input cdkFocusInitial formControlName="username" autocomplete="new-username" matInput />
-      </mat-form-field>
-      <mat-form-field color="primary">
-        <mat-label>Password</mat-label>
-        <input formControlName="password" autocomplete="new-password" matInput type="password" />
-      </mat-form-field>
-      <mat-form-field color="primary">
-        <mat-label>Confirm Password</mat-label>
-        <input formControlName="confirmPassword" autocomplete="new-confirm-password" matInput type="password"
-          [errorStateMatcher]="matcher" />
-        <mat-error *ngIf="form.hasError('notSame')">
-          Passwords do not match
-        </mat-error>
-      </mat-form-field>
-      <button type="button" class="btn-local" (click)="signUpLocal()" [disabled]="loading || form.invalid">
-        Sign Up
-      </button>
-    </form>
+<div class="flex flex-row justify-center items-center">
+  <div class="sm:bg-[#1f1e1e] bg-[#ffffff] lg:basis-1/2 basis-full flex items-center h-screen max-h-screen">
+    <div
+      class="bg-[#ffffff] sm:w-7/12 md:w-7/12 lg:w-9/12 xl:w-7/12 2xl:w-7/12 2xl:max-w-xl w-[95%] sm:px-5 px-3 sm:py-10 py-0 rounded-xl mx-auto">
+      <div class="flex flex-col justify-center items-center gap-5">
+        <div class="flex flex-col justify-start w-full">
+          <p class="text-2xl font-medium">{{ title | uppercase }}</p>
+          <div class="flex flex-row gap-1">
+            <span class="text-[#5a5959]">Already registered?
+            </span>
+            <span class="text-orange transition ease-in-out hover:-translate-y-1 hover:text-[#ff3131]">
+              <a class="font-medium cursor-pointer" (click)="signInLocal()">
+                Sign in with your credentials</a>
+            </span>
+          </div>
+        </div>
+        <form class="w-full flex flex-col items-center gap-2" [formGroup]="form" autocomplete="off"
+          (keydown.enter)="$event.preventDefault()">
+          <mat-form-field class="w-full" color="primary">
+            <mat-label>Username</mat-label>
+            <input cdkFocusInitial formControlName="username" autocomplete="new-username" matInput />
+          </mat-form-field>
+          <mat-form-field class="w-full" color="primary">
+            <mat-label>Password</mat-label>
+            <input formControlName="password" autocomplete="new-password" matInput type="password" />
+          </mat-form-field>
+          <mat-form-field class="w-full" color="primary">
+            <mat-label>Confirm Password</mat-label>
+            <input formControlName="confirmPassword" autocomplete="new-confirm-password" matInput type="password"
+              [errorStateMatcher]="matcher" />
+            <mat-error *ngIf="form.hasError('notSame')">
+              Passwords do not match
+            </mat-error>
+          </mat-form-field>
+          <button
+            class="bg-[#1cff8e] disabled:bg-[#b9b9b9] text-[#1f1e1e] border-none sm:w-2/5 w-full h-10 rounded-xl cursor-pointer disabled:cursor-not-allowed transition ease-in-out hover:-translate-y-1"
+            type="button" (click)="signUpLocal()" [disabled]="loading || form.invalid">
+            Sign Up
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="basis-1/2 hidden lg:block">
+    <img class="w-full max-w-full h-screen max-h-screen bg-cover" src="assets\images\front_auth_8.webp" alt="login-img">
   </div>
 </div>

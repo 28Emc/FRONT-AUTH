@@ -22,7 +22,7 @@ export class OauthRedirectComponent {
   ) {
     this.activatedRoute.queryParams
       .pipe(
-        delay(500), // FIXME: FOR TESTING PURPOSES ONLY
+        delay(3000), // FIXME: FOR TESTING PURPOSES ONLY
       )
       .subscribe((p: Params) => {
         let accessToken, validToken, isExpired = null;

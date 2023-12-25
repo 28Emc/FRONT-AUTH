@@ -1,42 +1,49 @@
-<div class="container">
+<div class="bg-[#d1d1d1] flex flex-col items-center justify-center h-screen">
   @defer (when !loading) {
   @if (profileData) {
-  <mat-card class="user-card">
-    <mat-card-header>
-      <mat-card-title>{{ profileData['username'] }}</mat-card-title>
+  <div class="w-[95%] max-w-md">
+    <div class="bg-[#1f1e1e] text-[#ffffff] flex flex-col items-center justify-center rounded-t-2xl">
+      <p class="pt-6 pb-1 text-xl">{{ profileData['username'] }}</p>
       @if (profileData['picture']) {
       }
-    </mat-card-header>
-    <mat-card-content>
-      <img [src]="profileData['picture']" alt="user-picture">
-      <p>FIRST NAME: <span>{{ ['', null].includes(profileData['firstName']) ? '-' : profileData['firstName'] }}</span>
+    </div>
+    <div class="bg-[#ffffff] flex flex-col items-center justify-center pt-8 border-none">
+      <img class="m-auto py-5 w-48 max-w-48 h-48 max-h-48 rounded-full" [src]="profileData['picture']"
+        alt="user-picture">
+      <p class="text-center text-lg">FIRST NAME: <span>{{ ['', null].includes(profileData['firstName']) ? '-' :
+          profileData['firstName']
+          }}</span>
       </p>
-      <p>LAST NAME: <span>{{ ['', null].includes(profileData['lastName']) ? '-' : profileData['lastName'] }}</span></p>
-      <p class="p-status">STATUS:
+      <p class="text-center text-lg">LAST NAME: <span>{{ ['', null].includes(profileData['lastName']) ? '-' :
+          profileData['lastName'] }}</span></p>
+      <p class="text-lg flex flex-row items-center justify-center gap-3">STATUS:
         <span>
-          <fa-icon [icon]="faCircle" [matTooltip]="profileData['statusDsc']"
-            [ngClass]="profileData['status'] === 'A' ? 'status-active' : 'status-inactive' "></fa-icon>
+          <fa-icon class="text-2xl" [icon]="faCircle" [matTooltip]="profileData['statusDsc']"
+            [ngClass]="profileData['status'] === 'A' ? 'text-green' : 'text-[#ff0000]' "></fa-icon>
         </span>
       </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button [disabled]="readOnly" matTooltip="Edit profile info" mat-icon-button class="btn-edit-profile"
-        (click)="readOnly ? null : goToProfilePage()">
+    </div>
+    <div class="bg-[#fff] flex flex-row justify-around pb-8 rounded-b-2xl">
+      <button
+        class="bg-[#ffb007] disabled:bg-[#b9b9b9] text-[#1f1e1e] disabled:text-[#fff] w-12 h-12 text-xl rounded-full border-none p-1 cursor-pointer disabled:cursor-not-allowed transition ease-in-out hover:-translate-y-1"
+        [disabled]="readOnly" matTooltip="Edit profile info" (click)="readOnly ? null : goToProfilePage()">
         <fa-icon [icon]="faPenToSquare"></fa-icon>
       </button>
-      <button matTooltip="Sign Out" mat-icon-button class="btn-logout" (click)="signOut()">
+      <button
+        class="bg-[#1f1e1e] text-[#ffffff] w-12 h-12 text-xl rounded-full border-none p-1 cursor-pointer disabled:cursor-not-allowed transition ease-in-out hover:-translate-y-1"
+        matTooltip="Sign Out" (click)="signOut()">
         <fa-icon [icon]="faSignOut"></fa-icon>
       </button>
-    </mat-card-actions>
-  </mat-card>
+    </div>
+  </div>
   }
   } @placeholder {
-  <p class="loading-text">Retrieving profile data...</p>
+  <p class="text-3xl text-center text-[#1f1e1e]">Retrieving profile data...</p>
   }
 
   @if (hasError) {
-  <p class="error-text">There was an error while retrieving profile data, come back later.</p>
-  <button mat-button class="btn-logout-inverse" (click)="signOut()">
+  <p class="text-3xl text-center text-[#ff0000]">There was an error while retrieving profile data, come back later.</p>
+  <button mat-button class="bg-[#1f1e1e] text-[#ffffff]" (click)="signOut()">
     Sign Out
   </button>
   }
