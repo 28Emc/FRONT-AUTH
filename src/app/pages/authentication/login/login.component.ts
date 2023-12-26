@@ -15,6 +15,7 @@ import { faGoogle } from "@fortawesome/free-brands-svg-icons/faGoogle";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons/faFacebook";
 import { faGithub } from "@fortawesome/free-brands-svg-icons/faGithub";
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons/faXTwitter";
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-login',
@@ -38,11 +39,15 @@ export class LoginComponent {
   providerBaseURL: string = `${environment.baseURL}/auth/login`;
   title: string = environment.titleFull;
   form: FormGroup;
+  inputType: 'text' | 'password' = 'password';
+  visible: boolean = false;
   loading: boolean = false;
   faGoogle = faGoogle;
   faFacebook = faFacebook;
   faGithub = faGithub;
   faTwitter = faXTwitter;
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
 
   constructor(
     private securityService: SecurityService,
@@ -50,6 +55,7 @@ export class LoginComponent {
     private router: Router,
     private fb: FormBuilder
   ) {
+    console.log('constr');
     this.securityService.secureStorage.clear();
     this.form = this.fb.group({
       username: ['', [Validators.required]],
@@ -57,7 +63,12 @@ export class LoginComponent {
     });
   }
 
-  signInLocal() {
+  togglePassword(): void {
+    this.inputType = this.inputType === 'password' ? 'text' : 'password';
+    this.visible = !this.visible;
+  }
+
+  signInLocal(): void {
     this.loading = true;
     this.form.disable();
     this.securityService.signInLocal(this.form.getRawValue()).subscribe({
@@ -79,29 +90,29 @@ export class LoginComponent {
     });
   }
 
-  signInWithGoogle() {
+  signInWithGoogle(): void {
     this.loading = true;
     this.form.disable();
     window.location.replace(`${this.providerBaseURL}/google`);
   }
 
-  signUpLocal() {
+  signUpLocal(): void {
     this.router.navigate(['/authentication/register']);
   }
 
-  signInWithFacebook() {
+  signInWithFacebook(): void {
     this.loading = true;
     this.form.disable();
     window.location.replace(`${this.providerBaseURL}/facebook`);
   }
 
-  signInWithGithub() {
+  signInWithGithub(): void {
     this.loading = true;
     this.form.disable();
     window.location.replace(`${this.providerBaseURL}/github`);
   }
 
-  signInWithTwitter() {
+  signInWithTwitter(): void {
     this.loading = true;
     this.form.disable();
     window.location.replace(`${this.providerBaseURL}/twitter`);

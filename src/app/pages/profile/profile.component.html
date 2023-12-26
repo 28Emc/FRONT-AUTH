@@ -1,32 +1,59 @@
-<mat-dialog-content class="d-flex-col">
-  <p>Edit profile info</p>
-  @defer(when this.dialogData.profileData) {
-  <div class="img-container">
-    <img [src]="this.dialogData.profileData.picture" alt="user-picture">
-    <input #imgInput hidden type="file" id="file" accept="image/png, image/jpeg" (change)="onImgSelected($event)">
-    @if (false) { <!-- TODO: CALL BACKEND SERVICE -->
-    <button type="button" class="btn-img" (click)="imgInput.click()" matTooltip="Change picture" [disabled]="loading">
-      <fa-icon [icon]="faCamera"></fa-icon>
-    </button>
-    }
+<div id="main-container" class="bg-[#d1d1d1] flex flex-col items-center justify-center h-screen">
+  @defer (when !loading) {
+  @if (profileData) {
+  <div id="profile-card" class="w-[95%] max-w-[400px]">
+    <div class="bg-[#ffffff] flex flex-col items-center justify-center gap-5 rounded-2xl p-5">
+      <div id="profile-header"
+        class="bg-[#ffffff] flex flex-row items-center justify-center gap-3 text-xl font-medium w-full">
+        {{ profileData['username'] }}
+        <span>
+          <fa-icon [icon]="faCircle" [matTooltip]="profileData['statusDsc']"
+            [ngClass]="profileData['status'] === 'A' ? 'text-green' : 'text-[#ff0000]'"></fa-icon>
+        </span>
+      </div>
+      <div id="profile-body" class="bg-[#ffffff] flex flex-col items-center justify-center gap-5">
+        <img id="profile-picture" class="w-48 max-w-48 h-48 max-h-48 rounded-full" [src]="profileData['picture']"
+          alt="user-picture">
+        <div id="profile-info" class="flex flex-col justify-center items-center w-full">
+          <p class="text-center text-lg">FIRST NAME: <span>{{ ['', null].includes(profileData['firstName']) ? '-' :
+              profileData['firstName']
+              }}</span>
+          </p>
+          <p class="text-center text-lg">LAST NAME: <span>{{ ['', null].includes(profileData['lastName']) ? '-' :
+              profileData['lastName'] }}</span>
+          </p>
+        </div>
+      </div>
+      <div id="profile-actions" class="bg-[#ffffff] flex flex-row justify-evenly w-full">
+        <button
+          class="text-[#5a5959] disabled:text-[#b9b9b9] disabled:cursor-not-allowed hover:text-[#ffb007] text-3xl rounded-full border-none cursor-pointer transition ease-in-out"
+          [disabled]="readOnly" matTooltip="Edit profile info" (click)="readOnly ? null : goToProfilePage()">
+          <fa-icon [icon]="faPenToSquare"></fa-icon>
+        </button>
+        <button
+          class="text-[#5a5959] disabled:text-[#b9b9b9] disabled:cursor-not-allowed hover:text-[#ff0000] text-3xl rounded-full border-none cursor-pointer transition ease-in-out"
+          matTooltip="Sign Out" (click)="signOut()">
+          <fa-icon [icon]="faSignOut"></fa-icon>
+        </button>
+      </div>
+    </div>
   </div>
   }
-  <form class="d-flex-col" [formGroup]="form" autocomplete="off" (keydown.enter)="$event.preventDefault()">
-    <mat-form-field color="primary">
-      <mat-label>Username</mat-label>
-      <input cdkFocusInitial formControlName="username" autocomplete="new-username" matInput />
-    </mat-form-field>
-    <mat-form-field color="primary">
-      <mat-label>First Name</mat-label>
-      <input formControlName="firstName" autocomplete="new-first-name" matInput type="text" />
-    </mat-form-field>
-    <mat-form-field color="primary">
-      <mat-label>Last Name</mat-label>
-      <input formControlName="lastName" autocomplete="new-last-name" matInput type="text" />
-    </mat-form-field>
-  </form>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button type="button" class="btn-save" (click)="save()" [disabled]="loading || form.invalid">SAVE</button>
-  <button type="button" class="btn-cancel" mat-dialog-close>CANCEL</button>
-</mat-dialog-actions>
+  } @placeholder {
+  <div class="flex flex-col justify-center items-center gap-5 p-5">
+    <p class="text-[#1f1e1e] text-3xl text-center">Retrieving profile data...</p>
+  </div>
+  }
+
+  @if (hasError) {
+  <div class="flex flex-col justify-center items-center gap-5 p-5">
+    <p class="text-[#ff0000] text-3xl text-center">There was an error while retrieving profile data, come back later.
+    </p>
+    <button type="button"
+      class="bg-[#1f1e1e] text-[#ff0000] disabled:bg-[#b9b9b9] disabled:text-[#1f1e1e] disabled:cursor-not-allowed hover:bg-[#ff0000] hover:text-[#1f1e1e] sm:w-[175px] w-full h-10 rounded-xl border-none cursor-pointer transition ease-in-out"
+      (click)="signOut()">
+      Sign Out
+    </button>
+  </div>
+  }
+</div>

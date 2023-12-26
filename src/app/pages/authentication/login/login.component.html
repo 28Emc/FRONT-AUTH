@@ -1,41 +1,77 @@
-<div class="container d-flex-col">
-  <div class="login-card d-flex-col">
-    <p class="title">{{ title | uppercase }}</p>
-    <p class="title-register">Not registered yet?
-      <a (click)="signUpLocal()" class="a-register">
-        Create an account!</a>
-    </p>
-    <form class="d-flex-col" [formGroup]="form" autocomplete="off" (keydown.enter)="$event.preventDefault()">
-      <mat-form-field color="primary">
-        <mat-label>Username</mat-label>
-        <input cdkFocusInitial formControlName="username" autocomplete="new-username" matInput />
-      </mat-form-field>
-      <mat-form-field color="primary">
-        <mat-label>Password</mat-label>
-        <input formControlName="password" autocomplete="new-password" matInput type="password" />
-      </mat-form-field>
-      <button type="button" class="btn-local" (click)="signInLocal()" [disabled]="loading || form.invalid">
-        Sign In
-      </button>
-    </form>
-    <p class="p-text-helper-1">or sign in with:</p>
-    <div class="btn-social-group d-flex-row">
-      <button type="button" matTooltip="Sign in with Google" class="d-flex-row btn-social btn-google"
-        (click)="signInWithGoogle()" [disabled]="loading">
-        <fa-icon [icon]="faGoogle"></fa-icon>
-      </button>
-      <button type="button" matTooltip="Sign in with Facebook" class="d-flex-row btn-social btn-fb"
-        (click)="signInWithFacebook()" [disabled]="loading">
-        <fa-icon [icon]="faFacebook"></fa-icon>
-      </button>
-      <button type="button" matTooltip="Sign in with Github" class="d-flex-row btn-social btn-git"
-        (click)="signInWithGithub()" [disabled]="loading">
-        <fa-icon [icon]="faGithub"></fa-icon>
-      </button>
-      <button type="button" matTooltip="Sign in with Twitter" class="d-flex-row btn-social btn-x"
-        (click)="signInWithTwitter()" [disabled]="loading">
-        <fa-icon [icon]="faTwitter"></fa-icon>
-      </button>
+<div id="main-container" class="flex flex-row justify-center items-center">
+  <div id="img-login" class="basis-2/5 hidden lg:block">
+    <img class="w-full max-w-full h-screen max-h-screen bg-cover" src="assets\images\front_auth_2.webp" alt="login-img">
+  </div>
+
+  <div id="login-container"
+    class="sm:bg-[#1f1e1e] bg-[#ffffff] lg:basis-3/5 basis-full flex items-center h-screen max-h-screen">
+    <div
+      class="bg-[#ffffff] sm:w-7/12 md:w-6/12 lg:w-7/12 xl:w-6/12 2xl:w-5/12 2xl:max-w-xl w-[95%] rounded-xl mx-auto">
+      <div id="login-card" class="flex flex-col justify-center items-center gap-5 p-5">
+        <div id="login-title" class="flex flex-col justify-start w-full">
+          <p class="text-2xl font-medium">{{ title | uppercase }}</p>
+          <div class="flex flex-row gap-2">
+            <span class="text-[#5a5959]">Not registered yet?
+            </span>
+            <span class="text-orange transition ease-in-out delay-100 hover:text-[#ff3131]">
+              <a class="font-medium cursor-pointer" (click)="signUpLocal()">
+                Create an account!</a>
+            </span>
+          </div>
+        </div>
+        <form id="login-form" class="w-full flex flex-col items-center gap-2" [formGroup]="form"
+          (keydown.enter)="$event.preventDefault()" autocomplete="off">
+          <mat-form-field class="w-full" color="primary">
+            <mat-label>Username</mat-label>
+            <input cdkFocusInitial formControlName="username" autocomplete="new-username" name="new-username"
+              matInput />
+          </mat-form-field>
+          <mat-form-field class="w-full" color="primary">
+            <mat-label>Password</mat-label>
+            <input [type]="inputType" formControlName="password" autocomplete="new-password" name="new-password"
+              matInput />
+            <button
+              class="mr-3 text-[#5a5959] disabled:cursor-not-allowed disabled:text-[#b9b9b9] hover:text-[#1f1e1e] text-lg"
+              type="button" [disabled]="loading" (click)="togglePassword()" matSuffix
+              [matTooltip]="inputType === 'text' ? 'Hide password' : 'Show password'" [matTooltipDisabled]="loading">
+              <fa-icon [icon]="visible ? faEyeSlash : faEye"></fa-icon>
+            </button>
+          </mat-form-field>
+          <button
+            class="bg-[#1f1e1e] text-[#1cff8e] disabled:bg-[#b9b9b9] disabled:text-[#1f1e1e] disabled:cursor-not-allowed hover:bg-[#1cff8e] hover:text-[#1f1e1e] sm:w-[200px] w-full h-10 rounded-xl border-none cursor-pointer transition ease-in-out"
+            type="button" (click)="signInLocal()" [disabled]="loading || form.invalid">
+            Sign In
+          </button>
+        </form>
+        <p class="text-[#5a5959]">or sign in with:</p>
+        <div id="login-social-buttons"
+          class="w-full lg:w-auto flex flex-row lg:gap-8 gap-0 lg:justify-between justify-around items-center">
+          <button
+            class="text-[#5a5959] disabled:text-[#b9b9b9] disabled:cursor-not-allowed hover:text-[#ff3131] text-4xl rounded-full border-none cursor-pointer transition ease-in-out"
+            type="button" matTooltip="Sign in with Google" [matTooltipDisabled]="loading" (click)="signInWithGoogle()"
+            [disabled]="loading">
+            <fa-icon [icon]="faGoogle"></fa-icon>
+          </button>
+          <button
+            class="text-[#5a5959] disabled:text-[#b9b9b9] disabled:cursor-not-allowed hover:text-[#1c26af] text-4xl rounded-full border-none cursor-pointer transition ease-in-out"
+            type="button" matTooltip="Sign in with Facebook" [matTooltipDisabled]="loading"
+            (click)="signInWithFacebook()" [disabled]="loading">
+            <fa-icon [icon]="faFacebook"></fa-icon>
+          </button>
+          <button
+            class="text-[#5a5959] disabled:text-[#b9b9b9] disabled:cursor-not-allowed hover:text-[#2b2b2b] text-4xl rounded-full border-none cursor-pointer transition ease-in-out"
+            type="button" matTooltip="Sign in with Github" [matTooltipDisabled]="loading" (click)="signInWithGithub()"
+            [disabled]="loading">
+            <fa-icon [icon]="faGithub"></fa-icon>
+          </button>
+          <button
+            class="text-[#5a5959] disabled:text-[#b9b9b9] disabled:cursor-not-allowed hover:text-[#0a0a0a] text-4xl rounded-full border-none cursor-pointer transition ease-in-out"
+            type="button" matTooltip="Sign in with Twitter" [matTooltipDisabled]="loading" (click)="signInWithTwitter()"
+            [disabled]="loading">
+            <fa-icon [icon]="faTwitter"></fa-icon>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

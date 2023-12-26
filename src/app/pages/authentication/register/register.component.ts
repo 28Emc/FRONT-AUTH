@@ -13,6 +13,8 @@ import { environment } from '../../../../environments/environment';
 import { SecurityService } from '../../../services/security.service';
 import { MyErrorStateMatcher, checkPasswords } from '../../../common/validators/customValidators';
 import { ErrorHandler } from '../../../utils/errorHandler';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +28,8 @@ import { ErrorHandler } from '../../../utils/errorHandler';
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    FontAwesomeModule
   ],
   providers: [ErrorHandler],
   templateUrl: './register.component.html',
@@ -37,6 +40,12 @@ export class RegisterComponent {
   form: FormGroup;
   matcher = new MyErrorStateMatcher();
   loading: boolean = false;
+  visible: boolean = false;
+  visibleCP: boolean = false;
+  inputType: 'text' | 'password' = 'password';
+  inputTypeCP: 'text' | 'password' = 'password';
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
 
   constructor(
     private securityService: SecurityService,
@@ -52,7 +61,17 @@ export class RegisterComponent {
     }, { validators: checkPasswords });
   }
 
-  signUpLocal() {
+  togglePassword(inputName: 'password' | 'confirm-password'): void {
+    if (inputName === 'password') {
+      this.inputType = this.inputType === 'password' ? 'text' : 'password';
+      this.visible = !this.visible;
+    } else {
+      this.inputTypeCP = this.inputTypeCP === 'password' ? 'text' : 'password';
+      this.visibleCP = !this.visibleCP;
+    }
+  }
+
+  signUpLocal(): void {
     this.loading = true;
     this.form.disable();
     const { confirmPassword, ...body } = this.form.getRawValue();
@@ -76,7 +95,7 @@ export class RegisterComponent {
     });
   }
 
-  signInLocal() {
+  signInLocal(): void {
     this.router.navigate(['authentication/login']);
   }
 }
