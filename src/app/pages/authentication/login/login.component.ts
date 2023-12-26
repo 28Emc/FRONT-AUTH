@@ -55,7 +55,6 @@ export class LoginComponent {
     private router: Router,
     private fb: FormBuilder
   ) {
-    console.log('constr');
     this.securityService.secureStorage.clear();
     this.form = this.fb.group({
       username: ['', [Validators.required]],
