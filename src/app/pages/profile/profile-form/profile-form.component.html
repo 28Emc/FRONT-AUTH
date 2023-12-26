@@ -38,34 +38,3 @@
       mat-dialog-close>Cancel</button>
   </div>
 </div>
-
-<!-- <mat-dialog-content class="d-flex-col">
-  <p>Edit profile info</p>
-  @defer(when this.dialogData.profileData) {
-  <div class="img-container">
-    <img [src]="this.dialogData.profileData.picture" alt="user-picture">
-    <input #imgInput hidden type="file" id="file" accept="image/png, image/jpeg" (change)="onImgSelected($event)">
-    <button type="button" class="btn-img" (click)="imgInput.click()" matTooltip="Change picture" [disabled]="loading">
-      <fa-icon [icon]="faCamera"></fa-icon>
-    </button>
-  </div>
-  }
-  <form class="d-flex-col" [formGroup]="form" autocomplete="off" (keydown.enter)="$event.preventDefault()">
-    <mat-form-field color="primary">
-      <mat-label>Username</mat-label>
-      <input cdkFocusInitial formControlName="username" autocomplete="new-username" name="new-username" matInput />
-    </mat-form-field>
-    <mat-form-field color="primary">
-      <mat-label>First Name</mat-label>
-      <input formControlName="firstName" autocomplete="new-first-name" name="new-first-name" matInput type="text" />
-    </mat-form-field>
-    <mat-form-field color="primary">
-      <mat-label>Last Name</mat-label>
-      <input formControlName="lastName" autocomplete="new-last-name" name="new-last-name" matInput type="text" />
-    </mat-form-field>
-  </form>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button type="button" class="btn-save" (click)="save()" [disabled]="loading || form.invalid">SAVE</button>
-  <button type="button" class="btn-cancel" mat-dialog-close>CANCEL</button>
-</mat-dialog-actions> -->
