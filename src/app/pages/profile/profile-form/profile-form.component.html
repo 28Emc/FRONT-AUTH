@@ -1,0 +1,71 @@
+<div id="main-profile-form-container" class="flex flex-col items-center gap-5 p-5">
+  <p id="profile-form-title" class="text-xl font-medium w-full">Edit profile info</p>
+  @defer(when this.dialogData.profileData) {
+  <div id="profile-form-img" class="relative">
+    <img class="w-48 max-w-48 h-48 max-h-48 rounded-full" [src]="this.dialogData.profileData.picture"
+      alt="user-picture">
+    <input id="imgInput" type="file" #imgInput hidden accept="image/png, image/jpeg" (change)="onImgSelected($event)">
+    <button
+      class="absolute bottom-0 right-[10px] bg-[#1f1e1e] text-[#ffffff] w-11 h-11 text-2xl rounded-full border-none cursor-pointer"
+      type="button" (click)="imgInput.click()" matTooltip="Change picture" [matTooltipDisabled]="loading"
+      [disabled]="loading">
+      <fa-icon [icon]="faCamera"></fa-icon>
+    </button>
+  </div>
+  }
+  <form id="profile-form" class="w-full" [formGroup]="form" autocomplete="off"
+    (keydown.enter)="$event.preventDefault()">
+    <mat-form-field class="w-full" color="primary">
+      <mat-label>Username</mat-label>
+      <input cdkFocusInitial formControlName="username" autocomplete="new-username" name="new-username" matInput
+        type="text" />
+    </mat-form-field>
+    <mat-form-field class="w-full" color="primary">
+      <mat-label>First Name</mat-label>
+      <input formControlName="firstName" autocomplete="new-first-name" name="new-first-name" matInput type="text" />
+    </mat-form-field>
+    <mat-form-field class="w-full" color="primary">
+      <mat-label>Last Name</mat-label>
+      <input formControlName="lastName" autocomplete="new-last-name" name="new-last-name" matInput type="text" />
+    </mat-form-field>
+  </form>
+  <div id="profile-form-actions" class="flex sm:flex-row flex-col justify-end items-center gap-3 w-full">
+    <button type="button"
+      class="bg-[#1f1e1e] text-[#1cff8e] disabled:bg-[#b9b9b9] disabled:text-[#1f1e1e] disabled:cursor-not-allowed hover:bg-[#1cff8e] hover:text-[#1f1e1e] sm:w-[200px] w-full h-10 rounded-xl border-none cursor-pointer transition ease-in-out"
+      (click)="save()" [disabled]="loading || form.invalid">Save</button>
+    <button type="button"
+      class="bg-[#ffffff] text-[#1f1e1e] disabled:bg-[#b9b9b9] disabled:text-[#1f1e1e] disabled:cursor-not-allowed hover:bg-[#ffffff] hover:text-[#1f1e1e] sm:w-[200px] w-full h-10 rounded-xl border-none cursor-pointer transition ease-in-out"
+      mat-dialog-close>Cancel</button>
+  </div>
+</div>
+
+<!-- <mat-dialog-content class="d-flex-col">
+  <p>Edit profile info</p>
+  @defer(when this.dialogData.profileData) {
+  <div class="img-container">
+    <img [src]="this.dialogData.profileData.picture" alt="user-picture">
+    <input #imgInput hidden type="file" id="file" accept="image/png, image/jpeg" (change)="onImgSelected($event)">
+    <button type="button" class="btn-img" (click)="imgInput.click()" matTooltip="Change picture" [disabled]="loading">
+      <fa-icon [icon]="faCamera"></fa-icon>
+    </button>
+  </div>
+  }
+  <form class="d-flex-col" [formGroup]="form" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+    <mat-form-field color="primary">
+      <mat-label>Username</mat-label>
+      <input cdkFocusInitial formControlName="username" autocomplete="new-username" name="new-username" matInput />
+    </mat-form-field>
+    <mat-form-field color="primary">
+      <mat-label>First Name</mat-label>
+      <input formControlName="firstName" autocomplete="new-first-name" name="new-first-name" matInput type="text" />
+    </mat-form-field>
+    <mat-form-field color="primary">
+      <mat-label>Last Name</mat-label>
+      <input formControlName="lastName" autocomplete="new-last-name" name="new-last-name" matInput type="text" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button type="button" class="btn-save" (click)="save()" [disabled]="loading || form.invalid">SAVE</button>
+  <button type="button" class="btn-cancel" mat-dialog-close>CANCEL</button>
+</mat-dialog-actions> -->

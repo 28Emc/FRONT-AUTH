@@ -1,94 +1,127 @@
-import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatInputModule } from '@angular/material/input';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faPenToSquare, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { SecurityService } from '../../services/security.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandler } from '../../utils/errorHandler';
 import { NotificationService } from '../../services/notification.service';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { Router } from '@angular/router';
+import { ProfileFormComponent } from './profile-form/profile-form.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [
-    MatDialogModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatInputModule,
+    CommonModule,
     MatButtonModule,
+    MatCardModule,
+    MatDividerModule,
     FontAwesomeModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule
   ],
   providers: [ErrorHandler],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent {
-  @ViewChild('imgInput') imgInput!: ElementRef;
-  form: FormGroup;
-  loading: boolean = false;
-  image: any = null;
-  faCamera = faCamera;
+  profileData: any = null;
+  loading: boolean = true;
+  hasError: boolean = false;
+  readOnly: boolean = false;
+  faCircle = faCircle;
+  faPenToSquare = faPenToSquare;
+  faSignOut = faSignOut;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public dialogData: any,
-    private dialogRef: MatDialogRef<ProfileComponent>,
+    private router: Router,
     private securityService: SecurityService,
     private notificationService: NotificationService,
-    private fb: FormBuilder,
-    private errorHandler: ErrorHandler
-  ) {
-    this.form = this.fb.group({
-      username: [this.dialogData.profileData.username, [Validators.required]],
-      firstName: [this.dialogData.profileData.firstName],
-      lastName: [this.dialogData.profileData.lastName],
-      status: [{ value: this.dialogData.profileData.status, disabled: true }, [Validators.required]],
-    });
+    private errorHandler: ErrorHandler,
+    private dialog: MatDialog
+  ) { }
+
+  ngOnInit(): void {
+    this.getProfileInfo();
   }
 
-  onImgSelected(event: any): void {
-    if (event.target?.files && event.target.files.length == 0) {
-      this.notificationService.showMessage('Image required', 'WARNING');
-      return;
-    }
-    const img = event.target.files[0];
-    if (!['image/png', 'image/jpeg'].includes(img.type)) {
-      this.notificationService.showMessage('The selected file is not an valid image', 'WARNING');
-      return;
-    }
-    this.updateProfilePic(img);
-  }
-
-  updateProfilePic(img: any): void {
-    const reader = new FileReader();
-    reader.onload = (fr) => {
-      const pictureBody = {
-        imgBase64: fr.target?.result?.toString()
-      };
-      this.loading = true;
-      this.securityService.updateProfilePicture(pictureBody).subscribe({
+  getProfileInfo(): void {
+    this.loading = true;
+    this.securityService.fetchProfileInfo()
+      .subscribe({
         next: (res: any) => {
           this.loading = false;
-          this.notificationService.showMessage('Image uploaded successfully.', 'SUCCESS');
-          // this.dialogData.profileData.picture = res.details['imgURL'];
+          this.profileData = res.details;
+          this.readOnly = this.checkIfProfileInfoCanBeEditable(this.profileData);
         },
         error: (err: HttpErrorResponse) => {
           this.loading = false;
+          this.hasError = true;
+          this.readOnly = false;
+          console.error({ err });
           this.errorHandler.handleHTTPErrors(err);
         },
         complete: () => {
           this.loading = false;
         }
       });
-    };
-    reader.readAsDataURL(img);
   }
 
-  save(): void {
-    this.dialogRef.close(this.form.getRawValue());
+  checkIfProfileInfoCanBeEditable(profileData: any): boolean {
+    return profileData.flgLogin && profileData.flgLoginDsc !== 'DEFAULT';
+  }
+
+  goToProfilePage(): void {
+    const dialogRef = this.dialog.open(ProfileFormComponent, {
+      width: '400px',
+      maxWidth: 'calc(100vw - 5px)',
+      disableClose: true,
+      enterAnimationDuration: 250,
+      exitAnimationDuration: 250,
+      data: {
+        profileData: this.profileData
+      },
+    });
+    dialogRef.afterClosed().subscribe(
+      (dialogData) => {
+        if (dialogData) {
+          this.editProfileInfo(dialogData);
+        }
+      }
+    );
+  }
+
+  editProfileInfo(profileInfo: any): void {
+    this.loading = true;
+    this.securityService.updateProfileInfo(profileInfo)
+      .subscribe({
+        next: (res: any) => {
+          this.loading = false;
+          this.securityService.secureStorage.set('tkn', res.details['access_token']);
+          this.notificationService.showMessage('Profile info updated successfully.', 'SUCCESS');
+          this.getProfileInfo();
+        },
+        error: (err: HttpErrorResponse) => {
+          this.loading = false;
+          this.hasError = true;
+          this.readOnly = false;
+          console.error({ err });
+          this.errorHandler.handleHTTPErrors(err);
+        },
+        complete: () => {
+          this.loading = false;
+        }
+      });
+  }
+
+  signOut(): void {
+    this.securityService.secureStorage.clear();
+    this.router.navigate(['/authentication/login'], { replaceUrl: true });
   }
 }

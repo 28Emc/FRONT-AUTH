@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { delay } from 'rxjs';
 import { SecurityService } from '../../../services/security.service';
 import { ErrorHandler } from '../../../utils/errorHandler';
 
@@ -21,9 +20,6 @@ export class OauthRedirectComponent {
     private errorHandler: ErrorHandler
   ) {
     this.activatedRoute.queryParams
-      .pipe(
-        delay(3000), // FIXME: FOR TESTING PURPOSES ONLY
-      )
       .subscribe((p: Params) => {
         let accessToken, validToken, isExpired = null;
         try {
