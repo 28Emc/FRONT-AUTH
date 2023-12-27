@@ -13,6 +13,8 @@ pipeline {
                 echo '*** Analysis step started'
                 withSonarQubeEnv('SonarQube') {
                     sh '''
+                    rm -rf dist
+                    rm -rf node_modules
                     echo "*** Executing analysis..."
                     ${SCANNER_HOME}/bin/sonar-scanner
                     echo "*** Terminating analysis..."
