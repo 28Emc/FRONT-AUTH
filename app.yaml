@@ -1,0 +1,16 @@
+runtime: python39
+service: default
+handlers:
+  - url: /
+    static_files: dist/front-auth/browser/index.html
+    upload: dist/front-auth/browser/index.html
+  - url: /
+    static_dir: dist/front-auth/browser
+  - url: /(.*\.(gif|png|jpeg|jpg|css|js|ico)(|\.map))$
+    static_files: dist/front-auth/browser/index.html
+    require_matching_file: false
+    upload: dist/front-auth/browser/(.*)(|\.map)
+  - url: /(.*)
+    static_files: dist/front-auth/browser/index.html
+    require_matching_file: false
+    upload: dist/front-auth/browser/index.html
