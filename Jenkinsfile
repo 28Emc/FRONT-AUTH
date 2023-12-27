@@ -29,7 +29,7 @@ pipeline {
                 echo "*** Installing project dependencies..."
                 npm install
                 echo "*** Executing project tests..."
-                npm run test
+                npm run test:silent
                 echo "*** Terminating project tests..."
                 '''
                 echo '*** Testing step done'
