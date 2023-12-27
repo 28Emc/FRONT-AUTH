@@ -27,6 +27,10 @@ pipeline {
         stage('Test') {
             steps {
                 echo '*** Test step started'
+                sh '''
+                echo "*** Installing project dependencies..."
+                npm install
+                '''
                 /* sh '''
                 echo "*** Installing project dependencies..."
                 npm install
