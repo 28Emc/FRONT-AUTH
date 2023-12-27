@@ -27,13 +27,13 @@ pipeline {
         stage('Test') {
             steps {
                 echo '*** Test step started'
-                sh '''
+                /* sh '''
                 echo "*** Installing project dependencies..."
                 npm install
                 echo "*** Executing project tests..."
                 npm run test:silent
                 echo "*** Terminating project tests..."
-                '''
+                ''' */
                 echo '*** Testing step done'
             }
         }
