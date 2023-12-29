@@ -3,12 +3,14 @@ pipeline {
 
     tools { nodejs 'NodeJS' }
 
+    environment {
+      SCANNER_HOME = tool 'SonarQubeScanner';
+      GOOGLE_PROJECT_ID = 'lustrous-bonito-409316';
+      GCP_VERSION = '20231229';
+    }
+
     stages {
         stage('SonarQube analysis') {
-            environment {
-                SCANNER_HOME = tool 'SonarQubeScanner';
-            }
-
             steps {
                 echo '*** Analysis step started'
                 withSonarQubeEnv('SonarQube') {
@@ -55,10 +57,6 @@ pipeline {
         }
 
         stage('Deploy') {
-            environment {
-                GOOGLE_PROJECT_ID = 'lustrous-bonito-409316';
-                GCP_VERSION = '20231227';
-            }
             steps {
                 withCredentials([file(credentialsId: 'gcp-secret-file', variable: 'GC_KEY')]) {
                     echo '*** Deploy step started'
