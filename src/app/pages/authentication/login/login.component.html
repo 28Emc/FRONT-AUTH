@@ -65,8 +65,8 @@
           </button>
           <button
             class="text-[#5a5959] disabled:text-[#b9b9b9] disabled:cursor-not-allowed hover:text-[#0a0a0a] text-4xl rounded-full border-none cursor-pointer transition ease-in-out"
-            type="button" matTooltip="Sign in with Twitter" [matTooltipDisabled]="loading" (click)="signInWithTwitter()"
-            [disabled]="loading">
+            type="button" matTooltip="Sign in with Twitter" [matTooltipDisabled]="loading || isProdMode()"
+            (click)="signInWithTwitter()" [disabled]="loading || isProdMode()">
             <fa-icon [icon]="faTwitter"></fa-icon>
           </button>
         </div>

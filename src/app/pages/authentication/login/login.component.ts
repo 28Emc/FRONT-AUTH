@@ -116,4 +116,8 @@ export class LoginComponent {
     this.form.disable();
     window.location.replace(`${this.providerBaseURL}/twitter`);
   }
+
+  isProdMode(): boolean {
+    return !environment.production;
+  }
 }

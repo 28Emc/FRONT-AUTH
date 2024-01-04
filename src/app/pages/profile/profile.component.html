@@ -15,13 +15,21 @@
         <img id="profile-picture" class="w-48 max-w-48 h-48 max-h-48 rounded-full" [src]="profileData['picture']"
           alt="user-picture">
         <div id="profile-info" class="flex flex-col justify-center items-center w-full">
-          <p class="text-center text-lg">FIRST NAME: <span>{{ ['', null].includes(profileData['firstName']) ? '-' :
+          @if (profileData['displayName']) {
+          <p class="text-center text-lg font-medium">DISPLAY NAME: <span class="font-normal">{{
+              profileData['displayName'] }}</span>
+          </p>
+          } @else {
+          <p class="text-center text-lg font-medium">FIRST NAME: <span class="font-normal">{{ ['',
+              null].includes(profileData['firstName']) ? '-' :
               profileData['firstName']
               }}</span>
           </p>
-          <p class="text-center text-lg">LAST NAME: <span>{{ ['', null].includes(profileData['lastName']) ? '-' :
+          <p class="text-center text-lg font-medium">LAST NAME: <span class="font-normal">{{ ['',
+              null].includes(profileData['lastName']) ? '-' :
               profileData['lastName'] }}</span>
           </p>
+          }
         </div>
       </div>
       <div id="profile-actions" class="bg-[#ffffff] flex flex-row justify-evenly w-full">
