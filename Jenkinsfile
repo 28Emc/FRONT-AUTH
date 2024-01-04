@@ -6,7 +6,7 @@ pipeline {
     environment {
       SCANNER_HOME = tool 'SonarQubeScanner';
       GOOGLE_PROJECT_ID = 'lustrous-bonito-409316';
-      GCP_VERSION = '20231229';
+      GCP_VERSION = '20240104';
     }
 
     stages {
