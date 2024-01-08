@@ -2,6 +2,8 @@
 
 Proyecto hecho con Angular v17 que gestiona el inicio de sesión de forma local (usuario y contraseña) y mediante redes sociales (Google, Facebook, Github, Twitter).
 
+![Alt text](src/assets/images/Front_Auth_Login_Page.png?raw=true "Importar volumenes desde lista")
+
 ## INSTALACIÓN
 
 Para instalar las dependencias del proyecto, ejecutar el comando:
